@@ -1,0 +1,15 @@
+{
+  "name": "tokyo-logger",
+  "version": "0.1.0",
+  "description": "Logging with JST",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "matadorrrr",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "moment-timezone": "^0.4.0"
+  }
+}
