@@ -4,7 +4,6 @@ var __tokyoDateTime = require('./lib/tokyo-datetime.js'),
     __util = require('util');
 	
 module.exports = (function(){
-
   var logger = function(config){
     var logConfig = null;
     try{ logConfig = config.get('tokyo-logger'); } catch(e){ }
@@ -12,19 +11,19 @@ module.exports = (function(){
     this.dateTimeFormat = 'YYYY/MM/DD HH:mm:ss.SSS';
         
     if(logConfig !== null && (typeof config) !== 'string'){
-        if(logConfig.filePath){this.filePath = logConfig.filePath;}
-        if(logConfig.stdout){this.stdout = logConfig.stdout;}
-        if(logConfig.dateTimeFormat){this.dateTimeFormat = logConfig.dateTimeFormat;}
+      if(logConfig.filePath){this.filePath = logConfig.filePath;}
+      if(logConfig.stdout){this.stdout = logConfig.stdout;}
+      if(logConfig.dateTimeFormat){this.dateTimeFormat = logConfig.dateTimeFormat;}
     }
     else if((typeof config) === 'string'){
-        this.filePath = config;
-        this.stdout = false;
+      this.filePath = config;
+      this.stdout = false;
     }
     else if(config === undefined){
-        this.stdout = true;
+      this.stdout = true;
     }
     else{
-        throw new Error('wrong argument');
+      throw new Error('wrong argument');
     }
   };
 	
