@@ -3,7 +3,7 @@ var __tokyoDateTime = require('./lib/tokyo-datetime.js'),
     __emitter = require('events').EventEmitter,
     __util = require('util');
 	
-module.exports = (function(filePath){
+module.exports = (function(){
 
   var logger = function(config){
     var logConfig = null;
@@ -11,7 +11,7 @@ module.exports = (function(filePath){
         
     this.dateTimeFormat = 'YYYY/MM/DD HH:mm:ss.SSS';
         
-    if((typeof logConfig) === 'Object'){
+    if((typeof logConfig) === 'object'){
         if(logConfig.fileName){this.fileName = logConfig.fileName;}
         if(logConfig.stdout){this.stdout = logConfig.stdout;}
         if(logConfig.dateTimeFormat){this.dateTimeFormat = logConfig.dateTimeFormat;}
