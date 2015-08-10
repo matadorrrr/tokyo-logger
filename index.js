@@ -11,13 +11,13 @@ module.exports = (function(){
         
     this.dateTimeFormat = 'YYYY/MM/DD HH:mm:ss.SSS';
         
-    if((typeof logConfig) === 'object'){
-        if(logConfig.fileName){this.fileName = logConfig.fileName;}
+    if(logConfig !== null && (typeof config) !== 'string'){
+        if(logConfig.filePath){this.filePath = logConfig.filePath;}
         if(logConfig.stdout){this.stdout = logConfig.stdout;}
         if(logConfig.dateTimeFormat){this.dateTimeFormat = logConfig.dateTimeFormat;}
     }
-    else if((typeof config) === "string"){
-        this.fileName = config;
+    else if((typeof config) === 'string'){
+        this.filePath = config;
         this.stdout = false;
     }
     else if(config === undefined){
@@ -33,8 +33,8 @@ module.exports = (function(){
   logger.prototype.write = function(tag, message){
     var dateTime = __tokyoDateTime.get(this.dateTimeFormat);
     var logMsg = makeLogMessage(dateTime, tag, message);
-    if(this.fileName){
-      __fs.appendFile(this.fileName, logMsg, function(error){
+    if(this.filePath){
+      __fs.appendFile(this.filePath, logMsg, function(error){
         if(error) throw error;
       });
     }
