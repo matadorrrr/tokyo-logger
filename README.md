@@ -18,5 +18,5 @@ Logging with JST
     logger.on('info', function(message, dateTime){
    	  console.log('received info message "' + message + '" on ' + dateTime);
     });
-   
-   logger.info("message"); // 2015/08/13 14:12:00.0000 :: [info] :: message
+    
+    logger.info("message"); // 2015/08/13 14:12:00.0000 :: [info] :: message
