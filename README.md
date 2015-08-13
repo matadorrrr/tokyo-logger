@@ -12,7 +12,7 @@ Logging with JST
     var logger = (require('tokyo-logger')).getLogger({
     	filePath : './example.log',
     	enableConsole : true,
-    	dateTimeFormat : 'YYYYMMDDHHmmss'
+    	dateTimeFormat : 'YYYY/MM/DD HH:mm:ss.SSS'
     });
     
     logger.on('info', function(message, dateTime){
