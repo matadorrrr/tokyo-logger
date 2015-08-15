@@ -13,12 +13,22 @@ Logging with JST
 var logger = (require('tokyo-logger')).getLogger({
 	filePath : './example.log',
 	enableConsole : true,
-	dateTimeFormat : 'YYYY/MM/DD HH:mm:ss.SSS'
+	dateTimeFormat : 'YYYY/MM/DD HH:mm:ss.SSS' // is default.
 });
 
-logger.on('info', function(message, dateTime){
-    console.log('received info message "' + message + '" on ' + dateTime);
+logger.on('error', function(message, dateTime){
+    //something
 });
     
-logger.info("message"); // 2015/08/13 14:12:00.0000 :: [info] :: message
+logger.error('myMessage'); // 2015/08/13 14:12:00.0000 :: [error] :: myMessage
+```
+method
+```js
+logger.trace(message);
+logger.debug(message);
+logger.info(message);
+logger.warn(message);
+logger.error(message);
+logger.fatal(message);
+logger.write(tag, message);
 ```

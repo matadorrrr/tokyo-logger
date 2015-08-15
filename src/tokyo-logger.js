@@ -52,6 +52,10 @@ var Logger = (function(){
     write(this, 'fatal', message);
   } 
   
+  logger.prototype.write = function(tag, message){
+    write(this, tag, message);
+  }
+  
   function write(self, tag, message){
     var dateTime = __tokyoDateTime.now(self.settings.dateTimeFormat);
     var logMsg = makeLogMessage(dateTime, tag, message);
