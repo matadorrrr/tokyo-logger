@@ -5,21 +5,29 @@ var __tokyoDateTime = require('./tokyo-datetime.js'),
 	
 var Logger = (function(){
   
+  var LOG_LEVEL = { 'Trace':0, 'Debug':1, 'Info':2, 'Warn':3, 'Error':4, 'Fatal':5 };
+  
   var logger = function(config){
     this.settings = getDefaultLogSetting();
     if((typeof config) == 'object'){
-      if(config.filePath)
-        this.settings.filePath = config.filePath;
-      if(config.enableConsole)
-        this.settings.enableConsole = config.enableConsole;
-      if(config.dateTimeFormat)
+      if(config.file.path){
+        this.settings.file.path = config.file.path; 
+      }
+      if(config.file.logLevel){
+        this.settings.file.logLevel = LOG_LEVEL[config.file.logLevel];
+      }
+      if(config.console){
+        this.settings.console = config.console;
+      }
+      if(config.dateTimeFormat){
         this.settings.dateTimeFormat = config.dateTimeFormat;
+      }
     }
     else if((typeof config) === 'string'){
-      this.settings.filePath = config;
+      this.settings.file.path = config;
     }
     else if(config === undefined){
-      this.settings.enableConsole = true;
+      this.settings.console = true;
     }
     else{
       throw new Error('wrong argument');
@@ -28,43 +36,45 @@ var Logger = (function(){
 	
   __util.inherits(logger, __emitter);
 
-  logger.prototype.trace = function(message){
-    write(this, 'trace', message);
+  logger.prototype.Trace = function(message){
+    write(this, 'Trace', message);
   };
   
-  logger.prototype.debug = function(message){
-    write(this, 'debug', message);
+  logger.prototype.Debug = function(message){
+    write(this, 'Debug', message);
   };
   
-  logger.prototype.info = function(message){
-    write(this, 'info', message);
+  logger.prototype.Info = function(message){
+    write(this, 'Info', message);
   };
   
-  logger.prototype.warn = function(message){
-    write(this, 'warn', message);
+  logger.prototype.Warn = function(message){   
+    write(this, 'Warn', message);
   };     
   
-  logger.prototype.error = function(message){
-    write(this, 'error', message);
+  logger.prototype.Error = function(message){
+    write(this, 'Error', message);
   };
   
-  logger.prototype.fatal = function(message){
-    write(this, 'fatal', message);
+  logger.prototype.Fatal = function(message){
+    write(this, 'Fatal', message);
   }; 
   
-  logger.prototype.write = function(tag, message){
+  logger.prototype.Write = function(tag, message){
     write(this, tag, message);
   };
   
   function write(self, tag, message){
     var dateTime = __tokyoDateTime.now(self.settings.dateTimeFormat);
     var logMsg = makeLogMessage(dateTime, tag, message);
-    if(self.settings.filePath){
-      __fs.appendFile(self.settings.filePath, logMsg, function(error){
-        if(error) throw error;
-      });
+    if(self.settings.file.path){
+      if(LOG_LEVEL[tag] === undefined || self.settings.file.logLevel <= LOG_LEVEL[tag]){
+        __fs.appendFile(self.settings.file.path, logMsg, function(error){
+          if(error) throw error;
+        });
+      }
     }
-    if(self.settings.enableConsole){
+    if(self.settings.console){
       process.stdout.write(logMsg);
     }
     self.emit(tag, message, dateTime);
@@ -75,7 +85,7 @@ var Logger = (function(){
   };
   
   function getDefaultLogSetting(){
-    return JSON.parse(__fs.readFileSync('node_modules/tokyo-logger/settings/defaultLogSetting.json', 'utf8'));
+    return JSON.parse(__fs.readFileSync('NODE_MODULES/tokyo-logger/settings/defaultLogSetting.json', 'utf8'));
   };
   
   return logger;

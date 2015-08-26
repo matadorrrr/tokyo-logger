@@ -1,6 +1,6 @@
 {
   "name": "tokyo-logger",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Logging with JST",
   "main": "index.js",
   "scripts": {

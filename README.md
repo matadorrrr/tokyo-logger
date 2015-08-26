@@ -11,24 +11,27 @@ Logging with JST
 //var logger = (require('tokyo-logger')).getLogger('./example.log');
 //or
 var logger = (require('tokyo-logger')).getLogger({
-	filePath : './example.log',
-	enableConsole : true,
+	file : {
+		path : './example.log',
+		logLevel : 'Warn'
+	},
+	console : true,
 	dateTimeFormat : 'YYYY/MM/DD HH:mm:ss.SSS' // is default.
 });
 
-logger.on('error', function(message, dateTime){
-    //something
+logger.on('Error', function(message, dateTime){
+    // Do something.
 });
     
-logger.error('myMessage'); // 2015/08/13 14:12:00.0000 :: [error] :: myMessage
+logger.Error('my message'); // 2015/08/13 14:12:00.0000 :: [Error] :: my message
 ```
-method
+methods
 ```js
-logger.trace(message);
-logger.debug(message);
-logger.info(message);
-logger.warn(message);
-logger.error(message);
-logger.fatal(message);
-logger.write(tag, message);
+logger.Trace(message);
+logger.Debug(message);
+logger.Info(message);
+logger.Warn(message);
+logger.Error(message);
+logger.Fatal(message);
+logger.Write(tag, message);
 ```

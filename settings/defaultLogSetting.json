@@ -1,5 +1,8 @@
 {
-	"filePath" : null,
-	"enableConsole" : false,
-	"dateTimeFormat" : "YYYY/MM/DD HH:mm:ss.SSS"
+	"file" : {
+		"path" : null,
+		"logLevel" : null
+	},
+	"console" : false,
+	"dateTimeFormat" : "YYYY/MM/DD HH:mm:ss.SSS"	
 }
