@@ -85,7 +85,7 @@ var Logger = (function(){
   };
   
   function getDefaultLogSetting(){
-    return JSON.parse(__fs.readFileSync('NODE_MODULES/tokyo-logger/settings/defaultLogSetting.json', 'utf8'));
+    return JSON.parse(__fs.readFileSync(__dirname + '/../settings/defaultLogSetting.json', 'utf8'));
   };
   
   return logger;
