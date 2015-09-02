@@ -22,6 +22,9 @@ var Logger = (function(){
       if(config.dateTimeFormat){
         this.settings.dateTimeFormat = config.dateTimeFormat;
       }
+      if(config.logFormat){
+        this.settings.logFormat = config.logFormat;
+      }
     }
     else if((typeof config) === 'string'){
       this.settings.file.path = config;
@@ -66,7 +69,7 @@ var Logger = (function(){
   
   function write(self, tag, message){
     var dateTime = __tokyoDateTime.now(self.settings.dateTimeFormat);
-    var logMsg = makeLogMessage(dateTime, tag, message);
+    var logMsg = makeLogMessage(self, dateTime, tag, message);
     if(self.settings.file.path){
       if(LOG_LEVEL[tag] === undefined || self.settings.file.logLevel <= LOG_LEVEL[tag]){
         __fs.appendFile(self.settings.file.path, logMsg, function(error){
@@ -80,8 +83,8 @@ var Logger = (function(){
     self.emit(tag, message, dateTime);
   };
 	
-  function makeLogMessage(dateTime, tag, message) {
-    return dateTime +' :: [' + tag + '] :: ' + message + '\n';
+  function makeLogMessage(self, dateTime, tag, message) {
+    return __util.format(self.settings.logFormat, dateTime, tag, message);
   };
   
   function getDefaultLogSetting(){

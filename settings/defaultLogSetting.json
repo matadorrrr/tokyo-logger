@@ -4,5 +4,6 @@
 		"logLevel" : null
 	},
 	"console" : false,
-	"dateTimeFormat" : "YYYY/MM/DD HH:mm:ss.SSS"	
+	"dateTimeFormat" : "YYYY/MM/DD HH:mm:ss.SSS",
+	"logFormat" : "%s :: [%s] :: %s\n"
 }

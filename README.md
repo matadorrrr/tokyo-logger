@@ -16,7 +16,8 @@ var logger = (require('tokyo-logger')).getLogger({
 		logLevel : 'Warn'
 	},
 	console : true,
-	dateTimeFormat : 'YYYY/MM/DD HH:mm:ss.SSS' // is default.
+	dateTimeFormat : 'YYYY/MM/DD HH:mm:ss.SSS', // is default.
+	logFormat : '%s :: [%s] :: %s\n' // is default. dateTime, tag and message.
 });
 
 logger.on('Error', function(message, dateTime){
