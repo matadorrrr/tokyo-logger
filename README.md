@@ -1,5 +1,5 @@
 # tokyo-logger
-Logging with JST
+Logging with JST Clock for the PaaS on foreign regions.
 
 ## install
     npm i tokyo-logger
