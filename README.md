@@ -26,7 +26,7 @@ logger.on('Error', function(message, dateTime){
     
 logger.Error('my message'); // 2015/08/13 14:12:00.0000 :: [Error] :: my message
 ```
-methods
+## methods
 ```js
 logger.Trace(message);
 logger.Debug(message);
