@@ -9,31 +9,28 @@ var Logger = (function(){
   
   var logger = function(config){
     this.settings = getDefaultLogSetting();
-    if((typeof config) == 'object'){
-      if(config.file.path){
-        this.settings.file.path = config.file.path; 
-      }
-      if(config.file.logLevel){
-        this.settings.file.logLevel = LOG_LEVEL[config.file.logLevel];
-      }
-      if(config.console){
-        this.settings.console = config.console;
-      }
-      if(config.dateTimeFormat){
-        this.settings.dateTimeFormat = config.dateTimeFormat;
-      }
-      if(config.logFormat){
-        this.settings.logFormat = config.logFormat;
-      }
-    }
-    else if((typeof config) === 'string'){
-      this.settings.file.path = config;
-    }
-    else if(config === undefined){
-      this.settings.console = true;
-    }
-    else{
-      throw new Error('wrong argument');
+    switch (typeof config) {
+      case 'object':
+        if(config.file){
+          if(config.file.path){
+            this.settings.file.path = config.file.path; 
+          }
+          if(config.file.logLevel){
+            this.settings.file.logLevel = LOG_LEVEL[config.file.logLevel];
+          }
+        }
+        if(config.console){
+          this.settings.console = config.console;
+        }
+        if(config.dateTimeFormat){
+          this.settings.dateTimeFormat = config.dateTimeFormat;
+        }
+        if(config.logFormat){
+          this.settings.logFormat = config.logFormat + '\n';
+        }
+        break;
+      case 'string': this.settings.file.path = config; break;
+      default: this.settings.console = true; break;
     }
   };
 	

@@ -6,25 +6,25 @@ Logging with JST Clock for the PaaS on foreign regions.
 
 ## example
 ```js
-//var logger = (require('tokyo-logger')).getLogger();
+//var logger = require('tokyo-logger').getLogger();
 //or
-//var logger = (require('tokyo-logger')).getLogger('./example.log');
+//var logger = require('tokyo-logger').getLogger('./example.log');
 //or
-var logger = (require('tokyo-logger')).getLogger({
+var logger = require('tokyo-logger').getLogger({
 	file : {
 		path : './example.log',
 		logLevel : 'Warn'
 	},
 	console : true,
 	dateTimeFormat : 'YYYY/MM/DD HH:mm:ss.SSS', // is default.
-	logFormat : '%s :: [%s] :: %s\n' // is default. dateTime, tag and message.
+	logFormat : '%s :: [%s] :: %s' // is default. dateTime, tag and message.
 });
 
 logger.on('Error', function(message, dateTime){
     // Do something.
 });
     
-logger.Error('my message'); // 2015/08/13 14:12:00.0000 :: [Error] :: my message
+logger.Error('my message'); // 2015/08/13 14:12:00.000 :: [Error] :: my message
 ```
 ## methods
 ```js
