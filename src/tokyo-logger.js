@@ -1,14 +1,21 @@
-var __tokyoDateTime = require('./tokyo-datetime.js'),
-    __fs = require('fs'),
-    __emitter = require('events').EventEmitter,
-    __util = require('util');
+var tokyoDateTime = require('./tokyo-datetime.js')
+  , fs = require('fs')
+  , emitter = require('events').EventEmitter
+  , util = require('util');
 	
 var Logger = (function(){
-  
-  var LOG_LEVEL = { 'Trace':0, 'Debug':1, 'Info':2, 'Warn':3, 'Error':4, 'Fatal':5 };
-  
-  var logger = function(config){
-    this.settings = getDefaultLogSetting();
+  var LOG_LEVEL = { 
+      'Trace' : 0, 
+      'Debug' : 1, 
+      'Info'  : 2, 
+      'Warn'  : 3, 
+      'Error' : 4, 
+      'Fatal' : 5    
+  };
+  var logger = function(config){  
+    this.settings = JSON.parse(fs.readFileSync(
+      __dirname + '/../settings/defaultLogSetting.json', 'utf8')
+    );  
     switch (typeof config) {
       case 'object':
         if(config.file){
@@ -34,58 +41,51 @@ var Logger = (function(){
     }
   };
 	
-  __util.inherits(logger, __emitter);
+  util.inherits(logger, emitter);
 
   logger.prototype.Trace = function(message){
-    write(this, 'Trace', message);
+    write.call(this, 'Trace', message);
   };
   
   logger.prototype.Debug = function(message){
-    write(this, 'Debug', message);
+    write.call(this, 'Debug', message);
   };
   
   logger.prototype.Info = function(message){
-    write(this, 'Info', message);
+    write.call(this, 'Info', message);
   };
   
   logger.prototype.Warn = function(message){   
-    write(this, 'Warn', message);
+    write.call(this, 'Warn', message);
   };     
   
   logger.prototype.Error = function(message){
-    write(this, 'Error', message);
+    write.call(this, 'Error', message);
   };
   
   logger.prototype.Fatal = function(message){
-    write(this, 'Fatal', message);
+    write.call(this, 'Fatal', message);
   }; 
   
   logger.prototype.Write = function(tag, message){
-    write(this, tag, message);
+    write.call(this, tag, message);
   };
   
-  function write(self, tag, message){
-    var dateTime = __tokyoDateTime.now(self.settings.dateTimeFormat);
-    var logMsg = makeLogMessage(self, dateTime, tag, message);
-    if(self.settings.file.path){
-      if(LOG_LEVEL[tag] === undefined || self.settings.file.logLevel <= LOG_LEVEL[tag]){
-        __fs.appendFile(self.settings.file.path, logMsg, function(error){
+  function write(tag, message){
+    var dateTime = tokyoDateTime.now(this.settings.dateTimeFormat);
+    var logMsg = util.format(this.settings.logFormat, dateTime, tag, message);
+    if(this.settings.file.path){
+      if(LOG_LEVEL[tag] === undefined ||
+         this.settings.file.logLevel <= LOG_LEVEL[tag]){
+        fs.appendFile(this.settings.file.path, logMsg, function(error){
           if(error) throw error;
         });
       }
     }
-    if(self.settings.console){
+    if(this.settings.console){
       process.stdout.write(logMsg);
     }
-    self.emit(tag, message, dateTime);
-  };
-	
-  function makeLogMessage(self, dateTime, tag, message) {
-    return __util.format(self.settings.logFormat, dateTime, tag, message);
-  };
-  
-  function getDefaultLogSetting(){
-    return JSON.parse(__fs.readFileSync(__dirname + '/../settings/defaultLogSetting.json', 'utf8'));
+    this.emit(tag, message, dateTime);
   };
   
   return logger;
